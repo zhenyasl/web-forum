@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Comment</title>
+</head>
+<body>
+    <h2>Create Comment</h2>
+    <form id="createCommentForm">
+        <input type="text" id="postId" placeholder="Post ID" required><br>
+        <textarea id="content" placeholder="Comment content" required></textarea><br>
+        <button type="submit">Create Comment</button>
+    </form>
+
+    <h2>See All Comments of a Post</h2>
+    <button id="viewComments">See All Comments</button>
+    <ul id="commentList"></ul>
+
+    <script>
+        document.getElementById('createCommentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const postId = document.getElementById('postId').value;
+            const content = document.getElementById('content').value;
+
+            fetch('https://rebbit-d25da83b2fc6.herokuapp.com/comments/' + postId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                },
+                body: JSON.stringify({ content })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to create comment');
+                }
+            })
+            .then(data => alert(data))
+            .catch((error) => {
+                console.error('Error:', error);
+                alert(error);
+            });
+        });
+
+        document.getElementById('viewComments').addEventListener('click', function() {
+            const postId = document.getElementById('postId').value;
+            if (!postId) {
+                alert("Please enter a Post ID.");
+                return;
+            }
+
+            fetch('https://rebbit-d25da83b2fc6.herokuapp.com/comments/' + postId)
+            .then(response => response.json())
+            .then(data => {
+                const commentList = document.getElementById('commentList');
+                commentList.innerHTML = ''; // Clear existing comments
+
+                data.forEach(comment => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Comment ID: ${comment.comment_id}, Content: ${comment.content}`;
+                    commentList.appendChild(listItem);
+                });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

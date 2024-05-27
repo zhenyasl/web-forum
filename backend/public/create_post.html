@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+</head>
+<body>
+    <h2>Create Post</h2>
+    <form id="createPostForm">
+        <input type="text" id="threadId" placeholder="Thread ID" required><br>
+        <textarea id="content" placeholder="Post content" required></textarea><br>
+        <button type="submit">Create Post</button>
+    </form>
+
+    <h2>See All Posts of a Thread</h2>
+    <button id="viewPosts">See All Posts</button>
+    <ul id="postList"></ul>
+
+    <script>
+        document.getElementById('createPostForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const threadId = document.getElementById('threadId').value;
+            const content = document.getElementById('content').value;
+
+            fetch('https://rebbit-d25da83b2fc6.herokuapp.com/posts/' + threadId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token') // Include the token here
+                },
+                body: JSON.stringify({ content })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to create post');
+                }
+            })
+            .then(data => alert(data))
+            .catch((error) => {
+                console.error('Error:', error);
+                alert(error);
+            });
+        });
+
+        document.getElementById('viewPosts').addEventListener('click', function() {
+            const threadId = document.getElementById('threadId').value;
+            if (!threadId) {
+                alert("Please enter a Thread ID.");
+                return;
+            }
+
+            fetch('https://rebbit-d25da83b2fc6.herokuapp.com/posts/' + threadId)
+            .then(response => response.json())
+            .then(data => {
+                const postList = document.getElementById('postList');
+                postList.innerHTML = ''; // Clear existing posts
+
+                data.forEach(post => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Post ID: ${post.post_id}, Content: ${post.content}`;
+                    postList.appendChild(listItem);
+                });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
