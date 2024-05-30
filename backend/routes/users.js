@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database'); // Adjust the path to your database connection module
+const db = require('../database');
 
-// GET user by user_id
+// user by user_id
 router.get('/:userId', (req, res) => {
     const { userId } = req.params;
 
@@ -19,7 +19,7 @@ router.get('/:userId', (req, res) => {
     });
 });
 
-// GET user ID by username
+// user ID by username
 router.get('/username/:username', (req, res) => {
     const { username } = req.params;
 
@@ -38,7 +38,7 @@ router.get('/username/:username', (req, res) => {
     });
 });
 
-//  Get all users
+//  all users
 router.get('/', (req, res) => {
     const query = 'SELECT * FROM Users';
     db.query(query, (err, results) => {
@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// GET user ID by email
+// user ID by email
 router.get('/email/:email', (req, res) => {
     const { email } = req.params;
 
@@ -69,7 +69,7 @@ router.get('/email/:email', (req, res) => {
     });
 });
 
-// GET all comments by a user
+// all comments by a user
 router.get('/user/:userId', (req, res) => {
     const { userId } = req.params;
 

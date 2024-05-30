@@ -138,7 +138,6 @@ const comments = [
     },
 ];
 
-//Function to insert data into a table
 function insertData(table, data) {
     data.forEach((item) => {
         const columns = Object.keys(item).join(', ');
@@ -152,7 +151,6 @@ function insertData(table, data) {
     });
 }
 
-// // Inserting data
 // insertData('Users', users);
 insertData('Threads', threads);
 // insertData('Posts', posts);

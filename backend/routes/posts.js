@@ -3,14 +3,14 @@ const router = express.Router();
 const authenticate = require('../auth/authenticate');
 const db = require('../database');
 
-// Endpoint to add a post to a thread (Authenticated users)
+// add a post to a thread
 router.post('/:threadId', authenticate, (req, res) => {
     const { threadId } = req.params;
-    const username = req.user.email; // Assuming the user ID is stored in req.user by your authentication middleware
+    const username = req.user.email;
     const { content } = req.body;
     console.log('content - ');
     console.log(req.body);
-    console.log('User name from req.user.email:', username); // Debugging line
+    console.log('User name from req.user.email:', username);
 
     if (!content) {
         return res.status(404).send('Content is required');

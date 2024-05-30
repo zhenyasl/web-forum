@@ -1,9 +1,9 @@
 const NotFound = () => {
-  return (
-    <section>
-      <h1>Страница не найдена</h1>
-    </section>
-  );
+    return (
+        <section>
+            <h1>Page not found</h1>
+        </section>
+    );
 };
 
 export default NotFound;

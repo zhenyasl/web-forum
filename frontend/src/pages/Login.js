@@ -22,10 +22,8 @@ const Login = () => {
     }, [status]);
     useEffect(() => {
         if (statusLog === 'completed') {
-            //console.log(dataLog);
             localStorage.setItem('authToken', dataLog);
             localStorage.setItem('name', username);
-            //alert(`You logged in, ${username}`);
         }
     }, [statusLog]);
 
@@ -37,16 +35,12 @@ const Login = () => {
         };
         console.log('going fetch');
 
-        await sendHttpRequestLog(user)
-            .then(() => {
-                window.location.reload();
-            })
-            .catch((error) => {
-                console.error('Error logging:', error);
-            });
-
-        localStorage.setItem('name', username);
-        //updateUser(username);
+        try {
+            await sendHttpRequestLog(user);
+            localStorage.setItem('name', username);
+        } catch (error) {
+            alert('Invalid email or password');
+        }
     };
 
     const handleRegister = async (event) => {

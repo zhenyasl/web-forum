@@ -2,15 +2,13 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const db = require('../database'); // Adjust the path as per your project structure
+const db = require('../database');
 
-// User login endpoint
 router.post('/login', (req, res) => {
     console.log("I'm in login!!!");
     try {
         const { email, password } = req.body;
 
-        // Basic validation
         if (!email || !password) {
             return res.status(400).send('Please provide email and password');
         }
@@ -30,27 +28,22 @@ router.post('/login', (req, res) => {
                     return res.status(401).send('Invalid credentials');
                 }
 
-                const user = results[0];
+                const user = results[0]; //знайдений користувач по email
 
-                // Compare provided password with stored hash
+                // Звірення паролю
                 const isMatch = await bcrypt.compare(
                     password,
                     user.password_hash
                 );
                 if (isMatch) {
-                    // Passwords match
-                    //console.log('User object:', user); // Add this line to debug
                     const token = jwt.sign(
                         { email: email, id: user.id },
                         process.env.JWT_SECRET,
                         { expiresIn: '10h' }
                     );
                     console.log(token);
-                    //console.log(json({ token }));
                     return res.json(token);
-                    //res.send('Login successful');
                 } else {
-                    // Passwords do not match
                     res.status(401).send('Invalid credentials');
                 }
             }

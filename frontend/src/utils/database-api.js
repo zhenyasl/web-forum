@@ -68,17 +68,17 @@ export async function login(UserData) {
     return data;
 }
 
-export async function getName(id) {
-    console.log(id);
-    // const response = await fetch(`${DATABASE_ROOT_DOMAIN}/users/${id}`);
-    // const data = await response.json();
+// export async function getName(id) {
+//     console.log(id);
+//     // const response = await fetch(`${DATABASE_ROOT_DOMAIN}/users/${id}`);
+//     // const data = await response.json();
 
-    // if (!response.ok) {
-    //   throw new Error(data.message || "Posts fetching error.");
-    // }
+//     // if (!response.ok) {
+//     //   throw new Error(data.message || "Posts fetching error.");
+//     // }
 
-    // return data;
-}
+//     // return data;
+// }
 export async function getUserComments(username) {
     console.log(username);
     const response = await fetch(

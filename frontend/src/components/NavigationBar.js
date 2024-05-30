@@ -10,6 +10,7 @@ function NavigationBar() {
     const [user, setUser] = useState('');
 
     useEffect(() => {
+        //localStorage.setItem('name', ' ');
         const storedUser = localStorage.getItem('name');
         if (storedUser) {
             setUser(storedUser);

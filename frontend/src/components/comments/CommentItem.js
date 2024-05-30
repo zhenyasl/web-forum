@@ -13,7 +13,7 @@ const CommentItem = (props) => {
         };
         sendHttpRequest(comment)
             .then(() => {
-                props.onDelete(); // Вызов колбэка для обновления списка комментариев в родительском компоненте
+                props.onDelete();
             })
             .catch((error) => {
                 console.error('Error deleting comment:', error);
