@@ -32,32 +32,8 @@ const Home = () => {
         if (status === 'completed') {
             //console.log(status);
             // console.log(loadedPosts);
-            // for (const key in loadedPosts) {
-            //   console.log(loadedPosts[key].content);
-            // }
         }
     }, [status]);
-
-    // useEffect(() => {
-    //   if (status === "completed") {
-    //     setPosts(loadedPosts);
-    //   }
-    // }, [status]);
-
-    // const loadedPosts = [
-    //   {
-    //     id: "j1",
-    //     topic: "Programming",
-    //     text: `How many programmers does it take to change a light bulb?
-    //           None - It's a hardware problem`,
-    //   },
-    //   {
-    //     id: "j2",
-    //     topic: "General",
-    //     text: `How many bones are in the human hand?
-    //           A handful of them.`,
-    //   },
-    // ];
 
     const toggleCreatePost = () => {
         setCreatePostVisible(!isCreatePostVisible);
