@@ -30,7 +30,7 @@ router.post('/register', async (req, res) => {
                 if (results.length > 0) {
                     return res.status(409).send('User already exists');
                 } else {
-                    // Hash password
+                    // Hashed password
                     const hashedPassword = await bcrypt.hash(password, 10);
 
                     // Save user to the database

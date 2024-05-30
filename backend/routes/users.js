@@ -38,11 +38,23 @@ router.get('/username/:username', (req, res) => {
     });
 });
 
+//  Get all users
+router.get('/', (req, res) => {
+    const query = 'SELECT * FROM Users';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching posts:', err);
+            return res.status(500).send('Server error while retrieving posts');
+        }
+        res.json(results);
+    });
+});
+
 // GET user ID by email
 router.get('/email/:email', (req, res) => {
     const { email } = req.params;
 
-    const query = 'SELECT user_id FROM Users WHERE email = ?';
+    const query = 'SELECT id FROM Users WHERE email = ?';
     db.query(query, [email], (err, result) => {
         if (err) {
             console.error('Error fetching user ID:', err);

@@ -1,92 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create and View Threads</title>
-</head>
-<body>
-    <h2>Create a New Thread</h2>
-    <form id="threadForm">
-        <input type="text" id="title" placeholder="Thread Title" required><br>
-        <button type="submit">Create Thread</button>
-    </form>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Create and View Threads</title>
+    </head>
+    <body>
+        <h2>Create a New Thread</h2>
+        <form id="threadForm">
+            <input
+                type="text"
+                id="title"
+                placeholder="Thread Title"
+                required
+            /><br />
+            <button type="submit">Create Thread</button>
+        </form>
 
-    <h2>Delete Thread</h2>
-    <form id="deleteThreadForm">
-        <input type="text" id="threadIdToDelete" placeholder="Thread ID" required><br>
-        <button type="submit">Delete Thread</button>
-    </form>
+        <h2>Delete Thread</h2>
+        <form id="deleteThreadForm">
+            <input
+                type="text"
+                id="threadIdToDelete"
+                placeholder="Thread ID"
+                required
+            /><br />
+            <button type="submit">Delete Thread</button>
+        </form>
 
-    <h2>All Threads</h2>
-    <button id="viewThreads">See All Threads</button>
-    <ul id="threadList"></ul>
+        <h2>All Threads</h2>
+        <button id="viewThreads">See All Threads</button>
+        <ul id="threadList"></ul>
 
-    <script>
-        document.getElementById('threadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        <script>
+            document
+                .getElementById('threadForm')
+                .addEventListener('submit', function (event) {
+                    event.preventDefault();
 
-            const title = document.getElementById('title').value;
+                    const title = document.getElementById('title').value;
 
-            fetch('https://rebbit-d25da83b2fc6.herokuapp.com/threads', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem('token') // Include the token here
-                },
-                body: JSON.stringify({ title }), // Only send the title
-            })
-            .then(response => response.text())
-            .then(data => alert(data))
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        });
+                    fetch(
+                        'https://project-forum-24da24271a0a.herokuapp.com/threads',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: localStorage.getItem('token'), // Include the token here
+                            },
+                            body: JSON.stringify({ title }), // Only send the title
+                        }
+                    )
+                        .then((response) => response.text())
+                        .then((data) => alert(data))
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                });
 
-        document.getElementById('viewThreads').addEventListener('click', function() {
-        fetch('https://rebbit-d25da83b2fc6.herokuapp.com/threads')
-        .then(response => response.json())
-        .then(data => {
-            const threadList = document.getElementById('threadList');
-            threadList.innerHTML = ''; // Clear current list
+            document
+                .getElementById('viewThreads')
+                .addEventListener('click', function () {
+                    fetch(
+                        'https://project-forum-24da24271a0a.herokuapp.com/threads'
+                    )
+                        .then((response) => response.json())
+                        .then((data) => {
+                            const threadList =
+                                document.getElementById('threadList');
+                            threadList.innerHTML = ''; // Clear current list
 
-            data.forEach(thread => {
-                const listItem = document.createElement('li');
-                const threadInfo = JSON.stringify(thread, null, 2); // Convert thread object to formatted string
-                listItem.textContent = threadInfo;
-                threadList.appendChild(listItem);
-            });
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+                            data.forEach((thread) => {
+                                const listItem = document.createElement('li');
+                                const threadInfo = JSON.stringify(
+                                    thread,
+                                    null,
+                                    2
+                                ); // Convert thread object to formatted string
+                                listItem.textContent = threadInfo;
+                                threadList.appendChild(listItem);
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
 
-         // Script to handle thread deletion
-        document.getElementById('deleteThreadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+                    // Script to handle thread deletion
+                    document
+                        .getElementById('deleteThreadForm')
+                        .addEventListener('submit', function (event) {
+                            event.preventDefault();
 
-            const threadId = document.getElementById('threadIdToDelete').value;
+                            const threadId =
+                                document.getElementById(
+                                    'threadIdToDelete'
+                                ).value;
 
-            fetch(`https://rebbit-d25da83b2fc6.herokuapp.com/threads/${threadId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': localStorage.getItem('token') // Include the token here
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to delete thread');
-                }
-            })
-            .then(data => alert(data))
-            .catch((error) => {
-                console.error('Error:', error);
-                alert(error);
-            });
-        });
-    });
-    </script>
-</body>
+                            fetch(
+                                `https://project-forum-24da24271a0a.herokuapp.com/threads/${threadId}`,
+                                {
+                                    method: 'DELETE',
+                                    headers: {
+                                        Authorization:
+                                            localStorage.getItem('token'), // Include the token here
+                                    },
+                                }
+                            )
+                                .then((response) => {
+                                    if (response.ok) {
+                                        return response.text();
+                                    } else {
+                                        throw new Error(
+                                            'Failed to delete thread'
+                                        );
+                                    }
+                                })
+                                .then((data) => alert(data))
+                                .catch((error) => {
+                                    console.error('Error:', error);
+                                    alert(error);
+                                });
+                        });
+                });
+        </script>
+    </body>
 </html>

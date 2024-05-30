@@ -1,24 +1,36 @@
-import { Fragment } from "react";
+import { Fragment } from 'react';
 
-import CommentItem from "./CommentItem";
-import styles from "../posts/PostItem.module.css";
+import CommentItem from './CommentItem';
+import styles from '../posts/PostItem.module.css';
 
 const CommentList = (props) => {
-  const comments = props.comments;
+    const comments = props.comments;
+    let isMyComments = true;
+    if (!props.isMyComments) {
+        isMyComments = false;
+    }
 
-  return (
-    <Fragment>
-      <ul className={styles.list}>
-        {comments.map((comment) => (
-          <CommentItem
-            key={comment.id}
-            id={comment.user_id}
-            content={comment.content}
-          />
-        ))}
-      </ul>
-    </Fragment>
-  );
+    const handleCommentDelete = () => {
+        props.onUpdate();
+    };
+
+    return (
+        <Fragment>
+            <ul className={styles.list}>
+                {comments.map((comment) => (
+                    <CommentItem
+                        key={comment.id}
+                        id={comment.id}
+                        post_id={comment.post_id}
+                        username={comment.username}
+                        content={comment.content}
+                        isMyComments={isMyComments}
+                        onDelete={handleCommentDelete}
+                    />
+                ))}
+            </ul>
+        </Fragment>
+    );
 };
 
 export default CommentList;

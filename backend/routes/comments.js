@@ -3,19 +3,19 @@ const router = express.Router();
 const authenticate = require('../auth/authenticate');
 const db = require('../database');
 
-// Endpoint to add a comment to a post (Authenticated users)
+// add a comment to a post (auth)
 router.post('/:postId', authenticate, (req, res) => {
     const { postId } = req.params;
-    const userId = req.user.id; // Assuming the user ID is stored in req.user by your authentication middleware
     const { content } = req.body;
+    const username = req.user.email;
 
     if (!content) {
         return res.status(400).send('Content is required');
     }
 
     const query =
-        'INSERT INTO Comments (post_id, user_id, content, comment_date) VALUES (?, ?, ?, NOW())';
-    db.query(query, [postId, userId, content], (err, result) => {
+        'INSERT INTO Comments (post_id, username, content, comment_date) VALUES (?, ?, ?, NOW())';
+    db.query(query, [postId, username, content], (err, result) => {
         if (err) {
             console.error('Error adding comment:', err);
             return res.status(500).send('Server error during comment creation');
@@ -26,7 +26,7 @@ router.post('/:postId', authenticate, (req, res) => {
     });
 });
 
-// Endpoint to get all comments of a post (Accessible to everyone)
+// get all comments of a post
 router.get('/:postId', (req, res) => {
     const { postId } = req.params;
 
@@ -42,7 +42,7 @@ router.get('/:postId', (req, res) => {
     });
 });
 
-// Endpoint to update a comment (Authenticated users)
+// update a comment (auth)
 router.put('/:commentId', authenticate, (req, res) => {
     const { commentId } = req.params;
     const { content } = req.body;
@@ -64,11 +64,11 @@ router.put('/:commentId', authenticate, (req, res) => {
     });
 });
 
-// Endpoint to delete a comment (Authenticated users)
+// delete a comment (auth)
 router.delete('/:commentId', authenticate, (req, res) => {
     const { commentId } = req.params;
 
-    const query = 'DELETE FROM Comments WHERE comment_id = ?';
+    const query = 'DELETE FROM Comments WHERE id = ?';
     db.query(query, [commentId], (err, result) => {
         if (err) {
             console.error('Error deleting comment:', err);
@@ -82,3 +82,19 @@ router.delete('/:commentId', authenticate, (req, res) => {
 });
 
 module.exports = router;
+
+// get all comments of a user
+router.get('/users/:username', (req, res) => {
+    const { username } = req.params;
+    //console.log(username);
+    const query = 'SELECT * FROM Comments WHERE username = ?';
+    db.query(query, [username], (err, results) => {
+        if (err) {
+            console.error('Error fetching comments:', err);
+            return res
+                .status(500)
+                .send('Server error while retrieving comments');
+        }
+        res.json(results);
+    });
+});

@@ -1,77 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test User Queries</title>
-</head>
-<body>
-    <h2>Get User by User ID</h2>
-    <input type="text" id="userId" placeholder="Enter User ID">
-    <button onclick="getUserById()">Get User</button>
-    <p id="userByIdResult"></p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Test User Queries</title>
+    </head>
+    <body>
+        <h2>Get User by User ID</h2>
+        <input type="text" id="userId" placeholder="Enter User ID" />
+        <button onclick="getUserById()">Get User</button>
+        <p id="userByIdResult"></p>
 
-    <h2>Get User ID by Username</h2>
-    <input type="text" id="username" placeholder="Enter Username">
-    <button onclick="getUserIdByUsername()">Get User ID</button>
-    <p id="userIdByUsernameResult"></p>
+        <h2>Get User ID by Username</h2>
+        <input type="text" id="username" placeholder="Enter Username" />
+        <button onclick="getUserIdByUsername()">Get User ID</button>
+        <p id="userIdByUsernameResult"></p>
 
-    <h2>Get User ID by Email</h2>
-    <input type="text" id="email" placeholder="Enter Email">
-    <button onclick="getUserIdByEmail()">Get User ID</button>
-    <p id="userIdByEmailResult"></p>
+        <h2>Get User ID by Email</h2>
+        <input type="text" id="email" placeholder="Enter Email" />
+        <button onclick="getUserIdByEmail()">Get User ID</button>
+        <p id="userIdByEmailResult"></p>
 
-    <h2>Get All Comments by User ID</h2>
-    <input type="text" id="commentUserId" placeholder="Enter User ID">
-    <button onclick="getAllCommentsByUserId()">Get Comments</button>
-    <ul id="commentsResult"></ul>
+        <h2>Get All Comments by User ID</h2>
+        <input type="text" id="commentUserId" placeholder="Enter User ID" />
+        <button onclick="getAllCommentsByUserId()">Get Comments</button>
+        <ul id="commentsResult"></ul>
 
-    <script>
-        function getUserById() {
-            const userId = document.getElementById('userId').value;
-            fetch(`https://rebbit-d25da83b2fc6.herokuapp.com/users/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('userByIdResult').innerText = JSON.stringify(data);
-                })
-                .catch(error => console.error('Error:', error));
-        }
+        <script>
+            function getUserById() {
+                const userId = document.getElementById('userId').value;
+                fetch(
+                    `https://project-forum-24da24271a0a.herokuapp.com/users/${userId}`
+                )
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById('userByIdResult').innerText =
+                            JSON.stringify(data);
+                    })
+                    .catch((error) => console.error('Error:', error));
+            }
 
-        function getUserIdByUsername() {
-            const username = document.getElementById('username').value;
-            fetch(`https://rebbit-d25da83b2fc6.herokuapp.com/users/username/${username}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('userIdByUsernameResult').innerText = JSON.stringify(data);
-                })
-                .catch(error => console.error('Error:', error));
-        }
+            function getUserIdByUsername() {
+                const username = document.getElementById('username').value;
+                fetch(
+                    `https://project-forum-24da24271a0a.herokuapp.com/users/username/${username}`
+                )
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById(
+                            'userIdByUsernameResult'
+                        ).innerText = JSON.stringify(data);
+                    })
+                    .catch((error) => console.error('Error:', error));
+            }
 
-        function getUserIdByEmail() {
-            const email = document.getElementById('email').value;
-            fetch(`https://rebbit-d25da83b2fc6.herokuapp.com/users/email/${email}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('userIdByEmailResult').innerText = JSON.stringify(data);
-                })
-                .catch(error => console.error('Error:', error));
-        }
+            function getUserIdByEmail() {
+                const email = document.getElementById('email').value;
+                fetch(
+                    `https://project-forum-24da24271a0a.herokuapp.com/users/email/${email}`
+                )
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById(
+                            'userIdByEmailResult'
+                        ).innerText = JSON.stringify(data);
+                    })
+                    .catch((error) => console.error('Error:', error));
+            }
 
-        function getAllCommentsByUserId() {
-            const userId = document.getElementById('commentUserId').value;
-            fetch(`https://rebbit-d25da83b2fc6.herokuapp.com/users/user/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const commentsList = document.getElementById('commentsResult');
-                    commentsList.innerHTML = ''; // Clear existing list
-                    data.forEach(comment => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = `Comment ID: ${comment.comment_id}, Content: ${comment.content}`;
-                        commentsList.appendChild(listItem);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    </script>
-</body>
+            function getAllCommentsByUserId() {
+                const userId = document.getElementById('commentUserId').value;
+                fetch(
+                    `https://project-forum-24da24271a0a.herokuapp.com/users/user/${userId}`
+                )
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const commentsList =
+                            document.getElementById('commentsResult');
+                        commentsList.innerHTML = ''; // Clear existing list
+                        data.forEach((comment) => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = `Comment ID: ${comment.comment_id}, Content: ${comment.content}`;
+                            commentsList.appendChild(listItem);
+                        });
+                    })
+                    .catch((error) => console.error('Error:', error));
+            }
+        </script>
+    </body>
 </html>

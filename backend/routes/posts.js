@@ -6,17 +6,19 @@ const db = require('../database');
 // Endpoint to add a post to a thread (Authenticated users)
 router.post('/:threadId', authenticate, (req, res) => {
     const { threadId } = req.params;
-    const userId = req.user.id; // Assuming the user ID is stored in req.user by your authentication middleware
+    const username = req.user.email; // Assuming the user ID is stored in req.user by your authentication middleware
     const { content } = req.body;
-    console.log('User id from req.user.id:', userId); // Debugging line
+    console.log('content - ');
+    console.log(req.body);
+    console.log('User name from req.user.email:', username); // Debugging line
 
     if (!content) {
-        return res.status(400).send('Content is required');
+        return res.status(404).send('Content is required');
     }
 
     const query =
-        'INSERT INTO Posts (thread_id, user_id, content, post_date) VALUES (?, ?, ?, NOW())';
-    db.query(query, [threadId, userId, content], (err, result) => {
+        'INSERT INTO Posts (thread_id, username, content, post_date) VALUES (?, ?, ?, NOW())';
+    db.query(query, [threadId, username, content], (err, result) => {
         if (err) {
             console.error('Error adding post:', err);
             return res.status(500).send('Server error during post creation');
