@@ -1,7 +1,7 @@
-const DATABASE_ROOT_DOMAIN = 'http://localhost:3000';
+const DATABASE_ROOT_DOMAIN = 'https://project-forum-24da24271a0a.herokuapp.com';
 
 export async function getPosts() {
-    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/posts/2`);
+    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/posts/2`); //всі пости поки прикріплені до 2го треду, поки проект не масштабований і тредів немає
     const data = await response.json();
 
     if (!response.ok) {
@@ -121,6 +121,7 @@ export async function addPost(PostData) {
     console.log(localStorage.getItem('authToken'));
     console.log(PostData);
     const response = await fetch(`${DATABASE_ROOT_DOMAIN}/posts/2`, {
+        //всі пости поки прикріплені до 2го треду, поки проект не масштабований і тредів немає
         method: 'POST',
         body: JSON.stringify(PostData),
         headers: {
@@ -139,12 +140,8 @@ export async function addPost(PostData) {
 
 export async function addComment(CommentData) {
     const token = localStorage.getItem('authToken');
-    console.log(CommentData);
-    console.log(localStorage.getItem('authToken'));
-    //console.log(CommentData.post_Id);
-    // const comment = {
-    //     content: CommentData.content,
-    // };
+    // console.log(CommentData);
+    // console.log(localStorage.getItem('authToken'));
     const response = await fetch(
         `${DATABASE_ROOT_DOMAIN}/comments/${CommentData.post_Id}`,
         {

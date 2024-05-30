@@ -95,6 +95,15 @@ const Post = (props) => {
         sendHttpRequest(postId);
     };
 
+    // <Link to={`/`}>
+    //             <button
+    //                 className={styles.deletePostButton}
+    //                 onClick={toggleDeletePost}
+    //             >
+    //                 Delete post
+    //             </button>
+    //         </Link>
+
     return (
         <Fragment>
             {/* <p className={styles.postTitle}>{topic}</p> */}
@@ -104,14 +113,7 @@ const Post = (props) => {
             >
                 Create comment
             </button>
-            <Link to={`/`}>
-                <button
-                    className={styles.deletePostButton}
-                    onClick={toggleDeletePost}
-                >
-                    Delete post
-                </button>
-            </Link>
+
             {isCreatePostVisible && (
                 <div className={styles.createPostBlock}>
                     <input

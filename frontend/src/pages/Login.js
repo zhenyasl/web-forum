@@ -37,7 +37,14 @@ const Login = () => {
         };
         console.log('going fetch');
 
-        await sendHttpRequestLog(user);
+        await sendHttpRequestLog(user)
+            .then(() => {
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error('Error logging:', error);
+            });
+
         localStorage.setItem('name', username);
         //updateUser(username);
     };
