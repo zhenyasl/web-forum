@@ -43,6 +43,47 @@ router.get('/:threadId', (req, res) => {
     });
 });
 
+router.get('/user/:userId', (req, res) => {
+    const { userId } = req.params;
+
+    const query =
+        'SELECT Posts.* FROM Posts JOIN Users ON Posts.username = Users.username WHERE Users.id = ?';
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error('Error fetching posts:', err);
+            return res.status(500).send('Server error while retrieving posts');
+        }
+        res.json(results);
+    });
+});
+
+router.get('/username/:username', (req, res) => {
+    const { username } = req.params;
+
+    const query =
+        'SELECT Posts.* FROM Posts JOIN Users ON Posts.user_id = Users.id WHERE Users.username = ?';
+    db.query(query, [username], (err, results) => {
+        if (err) {
+            console.error('Error fetching posts:', err);
+            return res.status(500).send('Server error while retrieving posts');
+        }
+        res.json(results);
+    });
+});
+
+router.get('/post/:postId', (req, res) => {
+    const { postId } = req.params;
+
+    const query = 'SELECT * FROM Posts WHERE id = ?';
+    db.query(query, [postId], (err, results) => {
+        if (err) {
+            console.error('Error fetching posts:', err);
+            return res.status(500).send('Server error while retrieving post');
+        }
+        res.json(results);
+    });
+});
+
 // Endpoint to update a post (Authenticated users)
 router.put('/:postId', authenticate, (req, res) => {
     const { postId } = req.params;

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 
-import { Container, Nav, Navbar as NavBarBs } from 'react-bootstrap';
+import { Container, Nav, Navbar as NavBarBs, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import styles from './nav.module.css';
 import UserContext from '../context/UserContext';
@@ -17,6 +17,12 @@ function NavigationBar() {
         }
     }, []);
 
+    const handleLogout = () => {
+        localStorage.removeItem('name');
+        localStorage.removeItem('authToken');
+        window.location.reload();
+    };
+
     return (
         <NavBarBs sticky="top" className={`shadow-sm mb-3 ${styles.navbar}`}>
             <Container>
@@ -24,19 +30,34 @@ function NavigationBar() {
                     <NavLink to="/" className={styles.navLink}>
                         Home
                     </NavLink>
-                    {user ? (
-                        <span className={styles.userName}>{user}</span>
-                    ) : (
-                        <NavLink to="/login" className={styles.navLink}>
-                            Login
-                        </NavLink>
-                    )}
                     <NavLink to="/login" className={styles.navLink}>
                         Login
+                    </NavLink>
+                    <NavLink to="/my-posts" className={styles.navLink}>
+                        My posts
                     </NavLink>
                     <NavLink to="/my-comments" className={styles.navLink}>
                         My comments
                     </NavLink>
+                    {user ? (
+                        <>
+                            <span className={styles.userName}>{user}</span>
+                            <span className={styles.logoutButtonContainer}>
+                                <Button
+                                    variant="outline-primary"
+                                    className={styles.logoutButton}
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                </Button>
+                            </span>
+                        </>
+                    ) : (
+                        <></>
+                        // <NavLink to="/login" className={styles.navLink}>
+                        //     Login
+                        // </NavLink>
+                    )}
                 </Nav>
             </Container>
         </NavBarBs>

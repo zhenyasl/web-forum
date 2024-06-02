@@ -1,20 +1,25 @@
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './PostItem.module.css';
-import React, { useState } from 'react';
 
-const PostItem = (props) => {
-    //const { id, text, topic } = props;
+const PostItem = ({ id, content, username, postDate }) => {
+    const formattedDate = new Date(postDate).toLocaleString();
+
     return (
-        <li className={styles.item}>
-            <Link to={`/post/${props.id}`}>
-                <figure>
-                    <blockquote>
-                        <p>{props.content}</p>
-                    </blockquote>
-                    <figcaption>{props.username}</figcaption>
-                </figure>
+        <div className={styles.card}>
+            <div>
+                <Link to={`/user/${id}`} className={styles.link}>
+                    <span className={styles.author}>{username}</span>
+                </Link>
+                <span className={styles.dot}>•</span>
+                <span className={styles.date}>{formattedDate}</span>
+            </div>
+            <Link to={`/post/${id}`} className={styles.link}>
+                <div className={styles.content}>
+                    <p>{content}</p>
+                </div>
             </Link>
-        </li>
+        </div>
     );
 };
 

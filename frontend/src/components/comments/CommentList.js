@@ -26,6 +26,7 @@ const CommentList = (props) => {
                         content={comment.content}
                         isMyComments={isMyComments}
                         onDelete={handleCommentDelete}
+                        commentDate={comment.comment_date}
                     />
                 ))}
             </ul>

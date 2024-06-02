@@ -6,10 +6,11 @@ import styles from './Home.module.css';
 import UserContext from '../context/UserContext';
 
 const Home = () => {
-    const [posts, setPosts] = useState([]);
+    //const [posts, setPosts] = useState([]);
     const [isCreatePostVisible, setCreatePostVisible] = useState(false);
     const [newPostTitle, setNewPostTitle] = useState('');
     //const { user, updateUser } = useContext(UserContext);
+    const user = localStorage.getItem('name');
     const {
         sendHttpRequest: getPostsRequest,
         status,
@@ -43,6 +44,10 @@ const Home = () => {
     };
 
     const handleCreatePost = async () => {
+        if (!user) {
+            alert('You have to be authorized to create post');
+            return;
+        }
         const post = {
             content: newPostTitle,
         };

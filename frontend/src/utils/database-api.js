@@ -23,20 +23,77 @@ export async function getPosts() {
 }
 
 export async function getPost(postId) {
-    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/posts/${postId}`);
+    const response = await fetch(
+        `${DATABASE_ROOT_DOMAIN}/posts/post/${postId}`
+    );
     const data = await response.json();
 
     if (!response.ok) {
         throw new Error(data.message || 'Post fetching error.');
     }
 
-    const convertedPost = {
-        id: postId,
-        ...data,
-    };
+    const convertedPosts = [];
 
-    return convertedPost;
+    for (const key in data) {
+        const post = {
+            id: key,
+            ...data[key],
+        };
+
+        convertedPosts.push(post);
+    }
+
+    return convertedPosts;
 }
+
+export async function getUserPosts(userId) {
+    const response = await fetch(
+        `${DATABASE_ROOT_DOMAIN}/posts/user/${userId}`
+    ); //всі пости поки прикріплені до 2го треду, поки проект не масштабований і тредів немає
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || 'Posts fetching error.');
+    }
+
+    const convertedPosts = [];
+
+    for (const key in data) {
+        const post = {
+            id: key,
+            ...data[key],
+        };
+
+        convertedPosts.push(post);
+    }
+
+    return convertedPosts;
+}
+
+export async function getUserPostsByName(username) {
+    const response = await fetch(
+        `${DATABASE_ROOT_DOMAIN}/posts/username/${username}`
+    ); //всі пости поки прикріплені до 2го треду, поки проект не масштабований і тредів немає
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || 'Posts fetching error.');
+    }
+
+    const convertedPosts = [];
+
+    for (const key in data) {
+        const post = {
+            id: key,
+            ...data[key],
+        };
+
+        convertedPosts.push(post);
+    }
+
+    return convertedPosts;
+}
+
 export async function addUser(UserData) {
     const response = await fetch(`${DATABASE_ROOT_DOMAIN}/auth/register`, {
         method: 'POST',

@@ -1,26 +1,43 @@
 .navbar {
-  height: 72px;
-  background-color: hsl(210, 22%, 49%); /* Темносеросиний фон */
-  display: flex;
-  justify-content: center; /* Центрирование элементов */
-  align-items: center;
+    height: 72px;
+    background-color: hsl(210, 22%, 49%); /* Темносеросиний фон */
+    display: flex;
+    justify-content: center; /* Центрирование элементов */
+    align-items: center;
 }
 
 .navbarNav {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .navLink {
-  text-decoration: none;
-  color: white; /* Белый цвет для текста кнопок */
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  margin-right: 1rem;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+    text-decoration: none;
+    color: white; /* Белый цвет для текста кнопок */
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 .navLink:hover {
-  background-color: #1e14ac; /* Цвет фона при наведении (светло-серосиний) */
+    background-color: #1e14ac;
+}
+
+.logoutButton {
+    background-color: #cb8188;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.logoutButton:hover {
+    background-color: #c82333;
+}
+
+.logoutButtonContainer {
+    margin-left: 1rem;
 }

@@ -24,6 +24,7 @@ const Login = () => {
         if (statusLog === 'completed') {
             localStorage.setItem('authToken', dataLog);
             localStorage.setItem('name', username);
+            window.location.reload();
         }
     }, [statusLog]);
 
