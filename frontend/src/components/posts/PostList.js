@@ -11,7 +11,7 @@ const PostList = ({ posts }) => {
                     id={post.id}
                     content={post.content}
                     username={post.username}
-                    postDate={post.comment_date}
+                    postDate={post.post_date}
                 />
             ))}
         </div>

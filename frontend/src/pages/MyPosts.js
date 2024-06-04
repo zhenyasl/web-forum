@@ -29,6 +29,7 @@ const MyPosts = () => {
 
     return (
         <Fragment>
+            <div> </div>
             {status === 'completed' && loadedPosts.length !== 0 && (
                 <PostList posts={loadedPosts} />
             )}

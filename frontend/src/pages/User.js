@@ -9,6 +9,7 @@ import UserContext from '../context/UserContext';
 const User = () => {
     //const { user, updateUser } = useContext(UserContext);
     const { userId } = useParams();
+    const { username } = useParams();
     const {
         sendHttpRequest: getPostsRequest,
         status,
@@ -29,6 +30,9 @@ const User = () => {
 
     return (
         <Fragment>
+            <div className={styles.usernameContainer}>
+                <div className={styles.username}>{username}</div>
+            </div>
             {status === 'completed' && loadedPosts.length !== 0 && (
                 <PostList posts={loadedPosts} />
             )}

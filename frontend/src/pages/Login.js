@@ -3,10 +3,12 @@ import styles from './Login.module.css';
 import { addUser, login } from '../utils/database-api';
 import useHttp from '../hooks/use-http';
 import UserContext from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
     //const { updateUser } = useContext(UserContext);
     const { sendHttpRequest, status, data } = useHttp(addUser);
     const {
@@ -24,6 +26,7 @@ const Login = () => {
         if (statusLog === 'completed') {
             localStorage.setItem('authToken', dataLog);
             localStorage.setItem('name', username);
+            navigate('/');
             window.location.reload();
         }
     }, [statusLog]);

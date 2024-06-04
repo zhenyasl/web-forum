@@ -23,6 +23,7 @@ const CommentList = (props) => {
                         id={comment.id}
                         post_id={comment.post_id}
                         username={comment.username}
+                        userId={comment.user_id}
                         content={comment.content}
                         isMyComments={isMyComments}
                         onDelete={handleCommentDelete}

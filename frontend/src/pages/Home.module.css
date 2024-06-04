@@ -66,3 +66,22 @@
     text-align: center;
     margin-top: 2rem;
 }
+
+.usernameContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.username {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    padding: 20px;
+    border: 2px solid #b08080;
+    border-radius: 10px;
+    background-color: #dbd0d0;
+}

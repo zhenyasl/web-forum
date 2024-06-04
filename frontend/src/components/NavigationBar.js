@@ -54,9 +54,6 @@ function NavigationBar() {
                         </>
                     ) : (
                         <></>
-                        // <NavLink to="/login" className={styles.navLink}>
-                        //     Login
-                        // </NavLink>
                     )}
                 </Nav>
             </Container>

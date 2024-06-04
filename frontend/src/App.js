@@ -7,7 +7,7 @@ import Post from './pages/Post';
 import Login from './pages/Login';
 import MyComments from './pages/MyComments';
 import User from './pages/User';
-import MyPosts from './pages/User';
+import MyPosts from './pages/MyPosts';
 
 function App() {
     return (
@@ -20,6 +20,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/my-comments" element={<MyComments />} />
                 <Route path="/user/:userId" element={<User />} />
+                <Route path="/user/:userId/:username" element={<User />} />
                 <Route path="/my-posts" element={<MyPosts />} />
             </Routes>
         </Router>

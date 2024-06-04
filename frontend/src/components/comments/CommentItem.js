@@ -26,13 +26,14 @@ const CommentItem = (props) => {
             <div className={styles.header}>
                 {!props.isMyComments && (
                     <Link
-                        to={`/user/${props.username}`}
+                        to={`/user/${props.userId}/${props.username}`}
                         className={styles.username}
                     >
                         {props.username}
                     </Link>
                 )}
                 {!props.isMyComments && <span className={styles.dot}>•</span>}
+                {/* <span className={styles.dot}>•</span> */}
                 <span className={styles.date}>{formattedDate}</span>
                 {props.username === name && (
                     <button

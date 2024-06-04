@@ -60,8 +60,7 @@ router.get('/user/:userId', (req, res) => {
 router.get('/username/:username', (req, res) => {
     const { username } = req.params;
 
-    const query =
-        'SELECT Posts.* FROM Posts JOIN Users ON Posts.user_id = Users.id WHERE Users.username = ?';
+    const query = 'SELECT * FROM Posts WHERE username = ?';
     db.query(query, [username], (err, results) => {
         if (err) {
             console.error('Error fetching posts:', err);
@@ -110,7 +109,7 @@ router.put('/:postId', authenticate, (req, res) => {
 router.delete('/:postId', authenticate, (req, res) => {
     const { postId } = req.params;
 
-    const query = 'DELETE FROM Posts WHERE post_id = ?';
+    const query = 'DELETE FROM Posts WHERE id = ?';
     db.query(query, [postId], (err, result) => {
         if (err) {
             console.error('Error deleting post:', err);

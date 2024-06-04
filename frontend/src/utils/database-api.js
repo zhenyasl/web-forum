@@ -262,3 +262,25 @@ export async function deleteComment(CommentData) {
     }
     return data;
 }
+
+export async function deletePost(PostData) {
+    const token = localStorage.getItem('authToken');
+
+    const response = await fetch(
+        `${DATABASE_ROOT_DOMAIN}/posts/${PostData.post_Id}`,
+        {
+            method: 'DELETE',
+            body: JSON.stringify(PostData),
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: token,
+            },
+        }
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.text || 'Comment adding error.');
+    }
+    return data;
+}

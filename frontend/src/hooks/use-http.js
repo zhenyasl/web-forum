@@ -48,7 +48,7 @@ function useHttp(sendRequest, isRequestSending = false) {
                     type: 'error',
                     errorMessage: error.message || 'Something went wrong!',
                 });
-                throw new Error('It was error');
+                //throw new Error('It was error');
             }
         },
         [sendRequest]

@@ -1,9 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import CommentList from '../components/comments/CommentList';
 import useHttp from '../hooks/use-http';
-import { addComment, getComments, getPost } from '../utils/database-api';
+import {
+    addComment,
+    getComments,
+    getPost,
+    deletePost,
+} from '../utils/database-api';
 import styles from './Home.module.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import PostList from '../components/posts/PostList';
 
@@ -11,7 +16,9 @@ const Post = (props) => {
     const [isCreatePostVisible, setCreateCommentVisible] = useState(false);
     const [newComment, setNewComment] = useState('');
     const user = localStorage.getItem('name');
+    //const userId = localStorage.getItem('id');
     const { postId } = useParams();
+    const navigate = useNavigate();
 
     console.log(postId);
     const {
@@ -21,7 +28,7 @@ const Post = (props) => {
     } = useHttp(getPost);
 
     const {
-        sendHttpRequest,
+        sendHttpRequest: sendHttpRequestGetComments,
         status,
         data: loadedComments,
     } = useHttp(getComments);
@@ -29,11 +36,13 @@ const Post = (props) => {
     const {
         sendHttpRequest: sendHttpRequestAdd,
         status: statusAdd,
-        data,
+        data: addedComment,
     } = useHttp(addComment);
 
+    const { sendHttpRequest: sendHttpRequestDeletePost } = useHttp(deletePost);
+
     useEffect(() => {
-        sendHttpRequest(postId);
+        sendHttpRequestGetComments(postId);
     }, []);
     useEffect(() => {
         getPostRequest(postId);
@@ -42,7 +51,7 @@ const Post = (props) => {
     useEffect(() => {
         if (getPostStatus === 'completed') {
             console.log('getPostStatus completed');
-            console.log(loadedPost);
+            console.log(loadedPost[0].username);
             // for (const key in loadedPosts) {
             //   console.log(loadedPosts[key].content);
             // }
@@ -59,6 +68,8 @@ const Post = (props) => {
     }, [status]);
     useEffect(() => {
         if (statusAdd === 'completed') {
+            console.log(addedComment);
+            updateCommentsList();
             //console.log(statusAdd);
             // for (const key in loadedPosts) {
             //   console.log(loadedPosts[key].content);
@@ -73,8 +84,17 @@ const Post = (props) => {
             setNewComment('');
         }
     };
-    const toggleDeletePost = () => {
-        //delete comment
+    const HandleDeletePost = () => {
+        const post = {
+            post_Id: postId,
+        };
+        sendHttpRequestDeletePost(post)
+            .then(() => {
+                navigate('/');
+            })
+            .catch((error) => {
+                console.error('Error deleting post:', error);
+            });
     };
 
     const handleCreateComment = () => {
@@ -88,29 +108,14 @@ const Post = (props) => {
         };
         console.log('comment');
         console.log(comment);
-        sendHttpRequestAdd(comment)
-            .then(() => {
-                updateCommentsList();
-            })
-            .catch((error) => {
-                console.error('Error deleting comment:', error);
-            });
+        sendHttpRequestAdd(comment);
 
         setCreateCommentVisible(false);
     };
 
     const updateCommentsList = () => {
-        sendHttpRequest(postId);
+        sendHttpRequestGetComments(postId);
     };
-
-    // <Link to={`/`}>
-    //             <button
-    //                 className={styles.deletePostButton}
-    //                 onClick={toggleDeletePost}
-    //             >
-    //                 Delete post
-    //             </button>
-    //         </Link>
 
     return (
         <Fragment>
@@ -120,8 +125,17 @@ const Post = (props) => {
                 <div>
                     <div className={styles.centeredContent}>
                         <PostList posts={loadedPost} />
+                        {loadedPost[0].username === user && (
+                            <Link to={`/`}>
+                                <button
+                                    className={styles.deletePostButton}
+                                    onClick={HandleDeletePost}
+                                >
+                                    Delete post
+                                </button>
+                            </Link>
+                        )}
                     </div>
-
                     <button
                         className={styles.createPostButton}
                         onClick={toggleCreateComment}
